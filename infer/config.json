@@ -1,0 +1,128 @@
+{
+	"model_type": "TensorFlow",
+	"metrics": {
+		"f1": 0.345294,
+		"accuracy": 0.462963,
+		"precision": 0.338977,
+		"recall": 0.351852
+	},
+	"runtime": "tf1.13-python3.6-cpu",
+	"model_algorithm": "image_classification",
+	"dependencies": [
+		{
+			"installer": "pip",
+			"packages": [
+				{
+					"restraint": "EXACT",
+					"package_version": "1.15.4",
+					"package_name": "numpy"
+				},
+				{
+					"restraint": "EXACT",
+					"package_version": "0.11.1",
+					"package_name": "pyarrow"
+				},
+				{
+					"restraint": "ATLEAST",
+					"package_version": "0.2.9",
+					"package_name": "imgaug"
+				},
+				{
+					"restraint": "ATLEAST",
+					"package_version": "0.14.5",
+					"package_name": "scikit-image"
+				},
+				{
+					"restraint": "ATLEAST",
+					"package_version": "0.13.2",
+					"package_name": "ipdb"
+				},
+				{
+					"restraint": "ATLEAST",
+					"package_version": "3.4.1.15",
+					"package_name": "opencv-python"
+				},
+				{
+					"restraint": "EXACT",
+					"package_version": "2.2.2",
+					"package_name": "keras"
+				},
+				{
+					"restraint": "ATLEAST",
+					"package_version": "0.4",
+					"package_name": "absl-py"
+				}
+			]
+		}
+	],
+	"apis": [
+		{
+			"procotol": "http",
+			"url": "/",
+			"method": "post",
+			"request": {
+				"Content-type": "multipart/form-data",
+				"data": {
+					"type": "object",
+					"required": [
+						"image"
+					],
+					"properties": {
+						"image": {
+							"type": "file",
+							"description": "上传图片文件"
+						},
+						"min_score": {
+							"type": "number",
+							"default": 0.2,
+							"maximum": 0.99,
+							"minimum": 0.01,
+							"description": "最小分数"
+						},
+						"show_image": {
+							"type": "number",
+							"default": 1,
+							"maximum": 1,
+							"minimum": 0,
+							"description": "是否输出带覆盖物结果base64输出图"
+						},
+						"show_box_label": {
+							"type": "number",
+							"default": 1,
+							"maximum": 1,
+							"minimum": 0,
+							"description": "结果图是否显示框和文字"
+						},
+						"input_size": {
+							"type": "number",
+							"default": 1024,
+							"maximum": 1024,
+							"minimum": 320,
+							"description": "图片尺寸统一处理大小识别"
+						}
+					}
+				}
+			},
+			"response": {
+				"Content-type": "multipart/form-data",
+				"data": {
+					"type": "object",
+					"required": [
+						"recognizer_data"
+					],
+					"properties": {
+						"predicted_image": {
+							"type": "string",
+							"description": "识别绘制图片base64"
+						},
+						"recognizer_data": {
+							"type": "object",
+							"roperties": {},
+							"description": "识别物体数据"
+						}
+					}
+				}
+			}
+		}
+	]
+}

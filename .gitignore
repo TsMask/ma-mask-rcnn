@@ -3,6 +3,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# 模型和视频文件忽略
+train/instance_segmentation.tar.gz
+notebook/test.mp4
+notebook/test.jpg
+
 # C extensions
 *.so
 
